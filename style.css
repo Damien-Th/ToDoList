@@ -1,0 +1,47 @@
+body{
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    background: #86A8E7;
+    color: white;
+}
+
+.date-task {
+    display: flex;
+    justify-content: space-around;
+}
+
+.valid-icon, .delete-icon, .plus-icon {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.theTask {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    background: white;
+    margin: 1em auto;
+    border-radius: 1em;
+    padding: 5px;
+    color: grey;
+}
+
+.inputTask {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.inputTask > input {
+    border:none;
+    outline: none;
+    border-radius: 2px;
+    margin-right: 10px;
+}
+
+.task.taskDone{
+    opacity: .5;
+    text-decoration : line-through;
+}
+
