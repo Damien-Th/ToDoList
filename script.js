@@ -48,7 +48,8 @@ let displayNewTask = () => {
         updateNbOfTask()
 
     } else {
-        alert(" Minimun 2 caractères");
+        customBox.innerHTML = '<p>Minimum 2 characters</p>';
+        modalShow();
     }
 }
 
@@ -75,9 +76,10 @@ function deleteOrCheckTask(e) {
         StoreTask.remove();
 
         updateNbOfTask()
-        
+
     } else if (item == className) {
-        alert("La Tache n'est pas terminer");
+        customBox.innerHTML = '<p>Not Done Yet !</p>';
+        modalShow();
     }
 
     //change the icon from checked or not
@@ -106,3 +108,20 @@ function updateNbOfTask() {
     let nbOfTask = document.getElementById('task')
     totalTask === 0 ? nbOfTask.innerHTML = 'No Task' : nbOfTask.innerHTML = totalTask + ' Tasks';
 };
+
+/********* Boîtes personnalisées *********/
+let modalContainer = document.createElement('div');
+modalContainer.setAttribute('id', 'modal');
+
+let customBox = document.createElement('div');
+customBox.className = 'custom-box';
+
+function modalShow() {
+    customBox.innerHTML += '<button id="modal-close">OK</button>';
+    modalContainer.appendChild(customBox);
+    document.body.appendChild(modalContainer);
+
+    document.getElementById('modal-close').addEventListener('click', () => {
+        document.body.removeChild(modalContainer);
+    });
+}
