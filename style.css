@@ -1,21 +1,26 @@
-body{
+body {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
     background: #86A8E7;
     color: white;
 }
 
+/*Date*/
 .date-task {
     display: flex;
     justify-content: space-around;
 }
 
-.valid-icon, .delete-icon, .plus-icon {
+/*icon*/
+.valid-icon,
+.delete-icon,
+.plus-icon {
     width: 25px;
     height: 25px;
     cursor: pointer;
 }
 
+/*new task element*/
 .theTask {
     display: flex;
     justify-content: space-between;
@@ -27,28 +32,51 @@ body{
     color: grey;
 }
 
+.task.taskDone {
+    opacity: .5;
+    text-decoration: line-through;
+}
+
+/*Input*/
 .inputTask {
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
 
-.inputTask > input {
-    border:none;
+.inputTask>input {
+    border: none;
     outline: none;
     border-radius: 2px;
     margin-right: 10px;
     padding: 5px;
 }
 
-.task.taskDone{
-    opacity: .5;
-    text-decoration : line-through;
+/*Modal*/
+.custom-box {
+    border: 2px solid #477bdd;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px;
+    width: fit-content;
+    background-color: #86A8E7;
+    margin: auto;
+    color: white;
 }
 
+#modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/*responsive*/
 @media screen and (max-width: 789px) {
     .theTask {
         width: 80%;
     }
 }
-
