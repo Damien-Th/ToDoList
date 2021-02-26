@@ -39,7 +39,7 @@ let displayNewTask = () => {
         newTask.insertAdjacentHTML('beforeend', newContenu);
 
         //put the new task into the array todos
-        todos.push([newContenu]);
+        todos.push(newContenu);
         localStorage["todos"] = JSON.stringify(todos);
 
         //clean the input
@@ -62,20 +62,20 @@ function deleteOrCheckTask(e) {
 
     const className = 'delete-icon';
     const classNameValid = 'valid-icon';
-    const item = e.target.className;
-    const attribute = e.target.parentElement.getAttribute("attribute");
+    let element = e.target;
+    const item = element.className;
+    let StoreTask = e.target.parentElement;
+    const attribute = StoreTask.getAttribute("attribute");
+    //Get child node index
+    let index = Array.prototype.indexOf.call(StoreTask.parentElement.children, StoreTask);
 
     //remove the task when is checked
     if (item == className && attribute) {
-        let StoreTask = e.target.parentElement;
-        todos.splice(StoreTask, 1);
-
+        todos.splice(index, 1);
+        StoreTask.remove();
+        updateNbOfTask()
         //update the new array in the localstorage
         localStorage["todos"] = JSON.stringify(todos);
-
-        StoreTask.remove();
-
-        updateNbOfTask()
 
     } else if (item == className) {
         customBox.innerHTML = '<p>Not Done Yet !</p>';
@@ -84,22 +84,23 @@ function deleteOrCheckTask(e) {
 
     //change the icon from checked or not
     if (item == classNameValid) {
-        let element = e.target;
         let icon = element.getAttribute("src");
-        let taskChild = e.target.parentElement.childNodes[1];
-        taskChild.classList.toggle("taskDone");
+        StoreTask.childNodes[1].classList.toggle("taskDone");
 
         if (icon == "icons/blackcheck.svg") {
             icon = "icons/greencheck.svg";
             element.setAttribute("src", icon);
-            e.target.parentElement.setAttribute("attribute", "complete");
-        } else {
+            StoreTask.setAttribute("attribute", "complete");
+            todos.splice(index, 1, StoreTask.outerHTML);
+            
+        } else if(icon == "icons/greencheck.svg") {
             icon = "icons/blackcheck.svg";
             element.setAttribute("src", icon);
-            e.target.parentElement.removeAttribute("attribute", "complete");
+            StoreTask.removeAttribute("attribute", "complete");
+            todos.splice(index, 1, StoreTask.outerHTML);
         }
+        localStorage["todos"] = JSON.stringify(todos);
     }
-
 }
 
 //Count the number of task
@@ -109,7 +110,7 @@ function updateNbOfTask() {
     totalTask === 0 ? nbOfTask.innerHTML = 'No Task' : nbOfTask.innerHTML = totalTask + ' Tasks';
 };
 
-/********* Boîtes personnalisées *********/
+//Custom Alert Box
 let modalContainer = document.createElement('div');
 modalContainer.setAttribute('id', 'modal');
 
