@@ -109,21 +109,21 @@ function deleteOrCheckTask(e) {
         element.setAttribute("contenteditable", "true")
         element.focus();
         taskValue = element.textContent;
+
+        element.addEventListener('focusout', () => {
+            newTaskValue = element.textContent;
+            element.removeAttribute("contenteditable", "true");
+            if (newTaskValue.length >= 2) {
+                todos.splice(index, 1, StoreTask.outerHTML);
+                localStorage["todos"] = JSON.stringify(todos);
+            } else {
+                element.textContent = taskValue;
+                customBox.innerHTML = '<p>Minimum 2 characters</p>';
+                modalShow();
+            }
+        });
     }
 
-    element.addEventListener('focusout', () => {
-        newTaskValue = element.textContent;
-        element.removeAttribute("contenteditable", "true");
-        if (newTaskValue.length >= 2) {
-            todos.splice(index, 1, StoreTask.outerHTML);
-            localStorage["todos"] = JSON.stringify(todos);
-        } else {
-            element.textContent = taskValue;
-            customBox.innerHTML = '<p>Minimum 2 characters</p>';
-            modalShow();
-        }
-    });
-    
 };
 
 //Count the number of task
