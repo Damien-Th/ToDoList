@@ -92,8 +92,8 @@ function deleteOrCheckTask(e) {
             element.setAttribute("src", icon);
             StoreTask.setAttribute("attribute", "complete");
             todos.splice(index, 1, StoreTask.outerHTML);
-            
-        } else if(icon == "icons/greencheck.svg") {
+
+        } else if (icon == "icons/greencheck.svg") {
             icon = "icons/blackcheck.svg";
             element.setAttribute("src", icon);
             StoreTask.removeAttribute("attribute", "complete");
@@ -101,7 +101,30 @@ function deleteOrCheckTask(e) {
         }
         localStorage["todos"] = JSON.stringify(todos);
     }
-}
+
+    //Edit The Task
+    let classTask = 'task';
+    let taskValue, newTaskValue;
+    if (item === classTask) {
+        element.setAttribute("contenteditable", "true")
+        element.focus();
+        taskValue = element.textContent;
+    }
+
+    element.addEventListener('focusout', () => {
+        newTaskValue = element.textContent;
+        element.removeAttribute("contenteditable", "true");
+        if (newTaskValue.length >= 2) {
+            todos.splice(index, 1, StoreTask.outerHTML);
+            localStorage["todos"] = JSON.stringify(todos);
+        } else {
+            element.textContent = taskValue;
+            customBox.innerHTML = '<p>Minimum 2 characters</p>';
+            modalShow();
+        }
+    });
+    
+};
 
 //Count the number of task
 function updateNbOfTask() {
